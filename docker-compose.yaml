@@ -1,0 +1,33 @@
+# Docker Compose configuration file
+#
+# References:
+#
+# * Compose Specification | Compose file reference | Reference | Docker Docs
+#   https://docs.docker.com/compose/compose-file/
+#
+# Copyright 2024 林博仁(Buo-ren, Lin) <Buo.Ren.Lin@gmail.com>
+# SPDX-License-Identifier: CC-BY-SA-4.0
+version: '3'
+
+services:
+  workspace:
+    container_name: lfs-workspace
+    hostname: lfs-workspace
+    image: ubuntu:22.04
+    volumes:
+      - type: bind
+        source: .
+        target: /project
+    command: sleep infinity
+    environment:
+      - http_proxy
+      - https_proxy
+      - HTTP_PROXY
+      - HTTPS_PROXY
+
+      # Set this environment variable to your local timezone settings
+      # for proper operation timestamp
+      - TZ=CST-8
+
+      # 規避 Ubuntu Docker 容器無法正確輸入與顯示中文字元的問題
+      - LANG=C.UTF-8
